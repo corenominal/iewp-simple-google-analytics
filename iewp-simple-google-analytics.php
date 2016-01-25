@@ -10,6 +10,27 @@
  */
 
 /**
+ * Plugin settings link
+ */
+function iewp_google_analytics_action_links( $actions, $plugin_file ) 
+{
+	static $plugin;
+
+	if (!isset($plugin))
+		$plugin = plugin_basename(__FILE__);
+	if ($plugin == $plugin_file)
+	{
+		$settings = array('settings' => '<a href="options-general.php?page=options-iewp-google-analytics">' . __('Settings', 'General') . '</a>');
+		//$site_link = array('support' => '<a href="http://corenominal.org" target="_blank">Support</a>');
+	
+		$actions = array_merge($settings, $actions);
+		//$actions = array_merge($site_link, $actions);	
+	}
+	return $actions;
+}
+add_filter( 'plugin_action_links', 'iewp_google_analytics_action_links', 10, 5 );
+
+/**
  * Output the tracking code.
  * Only outputs code if user is not logged in to WordPress.
  */
