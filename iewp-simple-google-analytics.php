@@ -1,7 +1,7 @@
 <?php
-
+if ( ! defined( 'WPINC' ) ) { die('Direct access prohibited!'); }
 /**
- * Plugin Name: IEWP Simple Google Analytics 
+ * Plugin Name: IEWP Simple Google Analytics
  * Plugin URI: https://github.com/corenominal/iewp-google-analytics
  * Description: A simple plugin to allow site owners to apply their Google Analytics tracking code to their pages. Once activated, see the "Settings -> Analytics" menu item to configure.
  * Author: Philip Newborough
@@ -12,7 +12,7 @@
 /**
  * Plugin settings link
  */
-function iewp_google_analytics_action_links( $actions, $plugin_file ) 
+function iewp_google_analytics_action_links( $actions, $plugin_file )
 {
 	static $plugin;
 
@@ -22,9 +22,9 @@ function iewp_google_analytics_action_links( $actions, $plugin_file )
 	{
 		$settings = array('settings' => '<a href="options-general.php?page=options-iewp-google-analytics">' . __('Settings', 'General') . '</a>');
 		//$site_link = array('support' => '<a href="http://corenominal.org" target="_blank">Support</a>');
-	
+
 		$actions = array_merge($settings, $actions);
-		//$actions = array_merge($site_link, $actions);	
+		//$actions = array_merge($site_link, $actions);
 	}
 	return $actions;
 }
@@ -60,7 +60,7 @@ add_action( 'wp_head', 'iewp_google_analytics_output_tracking_code' );
  */
 function iewp_google_analytics()
 {
-	add_submenu_page( 
+	add_submenu_page(
 		'options-general.php', // parent slug to attach to
 		'Google Analytics', // page title
 		'Analytics', // menu title
@@ -80,7 +80,7 @@ add_action( 'admin_menu', 'iewp_google_analytics' );
 function iewp_google_analytics_callback()
 {
 	?>
-	
+
 		<div class="wrap">
 			<h1>Google Analytics</h1>
 
@@ -93,11 +93,11 @@ function iewp_google_analytics_callback()
 			$tracking_code = trim( get_option( 'iewp_google_analytics_code', '' ) );
 			if( $tracking_code == '' ):
 			?>
-				
+
 				<hr>
 
 				<p><a href="https://analytics.google.com/" target="_blank">Sign-in to Google Analytics</a>, copy your site's tracking code and paste it into the box below:</p>
-			
+
 			<?php else: ?>
 
 				<hr>
@@ -106,9 +106,9 @@ function iewp_google_analytics_callback()
 				<br><strong>Note:</strong> users who are logged in to WordPress will not be tracked.</p>
 
 			<?php endif; ?>
-			
+
 			<form method="POST" action="options.php">
-		
+
 				<?php settings_fields( 'iewp_google_analytics_group' ); ?>
 				<?php do_settings_sections( 'iewp_google_analytics_options' ); ?>
 				<?php submit_button(); ?>
@@ -126,9 +126,9 @@ function iewp_google_analytics_callback()
 function iewp_google_analytics_register()
 {
 	register_setting( 'iewp_google_analytics_group', 'iewp_google_analytics_code');
-	
+
 	add_settings_section( 'iewp-google-analytics-options', '', 'iewp_google_analytics_options', 'iewp_google_analytics_options' );
-	
+
 	add_settings_field( 'iewp-google-analytics-code', 'Tracking Code', 'iewp_google_analytics_code', 'iewp_google_analytics_options', 'iewp-google-analytics-options' );
 }
 
